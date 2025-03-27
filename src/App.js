@@ -1,34 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
-import Courses from './components/Courses';
-import Students from './components/Students';
-import Teachers from './components/Teachers';
-import Events from './components/Events';
-import Tasks from './components/Tasks';
-import Attendance from './components/Attendance';
-import Chat from './components/Chat';
-import Navigation from './components/Navigation';
+import  TaskList  from './featuers/lecturer/TaskList';
+import { AddTask } from './featuers/lecturer/AddTask';
+import { SelectCours } from './featuers/lecturer/SelectCours';
 
 function App() {
+
+
+
   return (
-    <>
-    <p>hi</p>
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/students" element={<Students />} />
-        <Route path="/teachers" element={<Teachers />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/attendance" element={<Attendance />} />
-        <Route path="/chat" element={<Chat />} />
-      </Routes>
-    </Router>
-    </>
+    <div className="App">
+      {/* <h1>Maalot 360</h1> */}
+
+
+      <h1>Maalot 360</h1>
+      <TaskList/>
+        {/* <AddTask/> */}
+        <SelectCours />
+      </div>
   );
 }
 
