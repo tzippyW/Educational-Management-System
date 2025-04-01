@@ -26,10 +26,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build and deploy
+      - name: Deploy to GitHub Pages
         run: |
           mkdir -p public
-          # הוסיפו כאן את פקודות הבנייה והפריסה שלכם
-          git add .
+          cp -r dist/* public/
+          git add public/*
           git commit -m "Deploy updates"
           git push origin gh-pages
