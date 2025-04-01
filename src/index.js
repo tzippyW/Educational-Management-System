@@ -17,11 +17,11 @@ root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <Routes>
-                <Route path="/add-questions/:taskName/course/:courseName" element={<AddQuestions />} />
+                    <Route path="/add-questions/:taskName/course/:courseName" element={<AddQuestions />} />
                     <Route path="/" element={<SelectCours />} />
                     <Route path="/add-task/:courseName" element={<AddTask />} />
                     <Route path="/TaskList/:courseName" element={<TaskList />} />
-                    <Route path="*" element={<App />} /> // נתיב ברירת מחדל
+                    <Route path="*" element={<App />} /> {/* נתיב ברירת מחדל */}
                 </Routes>
             </BrowserRouter>
         </Provider>
