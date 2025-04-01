@@ -307,11 +307,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { TextField, Button, Grid, Paper, Typography, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
-import CheckIcon from '@mui/icons-material/Check'; // אייקון לשמירת שאלה
 import { addQuestions } from './taskSlice'; // ודאי שהנתיב נכון
 
 export const AddQuestions = () => {
-    const { taskId, taskName, courseName } = useParams();
+    const { taskId, courseName } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);

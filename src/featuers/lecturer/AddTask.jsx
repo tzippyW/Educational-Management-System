@@ -214,7 +214,6 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Grid, Paper, Typography } from '@mui/material';
 import { addTask } from './taskSlice';
 import SaveIcon from '@mui/icons-material/Save';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 export const AddTask = () => {
     const dispatch = useDispatch();
