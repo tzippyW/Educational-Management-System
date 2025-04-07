@@ -11,8 +11,8 @@ import Attendance from './components/Attendance';
 import Chat from './components/Chat';
 // import Navigation from './components/Navigation';
 // import TaskList from './featuers/lecturer/TaskList';
-// import { AddTask } from './featuers/lecturer/AddTask';
-// import { SelectCours } from './featuers/lecturer/SelectCours';
+import { AddTask } from './featuers/lecturer/AddTask';
+import { SelectCours } from './featuers/lecturer/SelectCours';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 //  import Event from "../src/components/Event"
 
@@ -44,3 +44,4 @@ function App() {
 }
 
 export default App;
+
