@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = [
   { 
     id: 1, 
-    title: "מפגש", 
-    start: new Date(2025, 2, 5, 17, 30), 
-    end: new Date(2025, 2, 6, 18, 30),
+    title: "מפגש השתלמות מס' 1",
+    type:"מפגשים", 
+    start: new Date(2025, 3, 4, 17, 30), 
+    end: new Date(2025, 3, 4, 17, 30),
     importance: "3", 
     eventMessage: " סמינר מעלות בשעה:12:00",
     visible:true
@@ -13,20 +14,33 @@ const initialState = [
   { 
     id: 2, 
     title: "הגשת פרויקט", 
-    start: new Date(2025, 2, 20, 10, 0), 
-    end: new Date(2025, 2, 20, 12, 0),
+    type:"הגשות",
+    start: new Date(2025, 3, 18, 10, 0), 
+    end: new Date(2025, 3, 18, 10, 0),
     importance: "2", 
-    eventMessage: "הגשת מסמכים וסיכום תיעוד",
+    eventMessage: "הגשת הקוד+תיעוד בסרטון",
     visible:true
 
   },
   { 
     id: 3, 
     title: " מפגש בזום", 
-    start: new Date(2025, 2, 10, 10, 0), 
-    end: new Date(2025, 2, 10, 12, 0),
+    type:"זום",
+    start: new Date(2025, 3, 7, 10, 0), 
+    end: new Date(2025, 3, 7, 12, 0),
     importance: "2", 
     eventMessage: "הנחיות לגבי הגשת הפרויקט",
+    visible:true
+
+  },
+  { 
+    id: 4, 
+    title: " מפגש השתלמות מס' 2", 
+    type:"מפגשים",
+    start: new Date(2025, 3, 15, 10, 0), 
+    end: new Date(2025, 3, 15, 12, 0),
+    importance: "2", 
+    eventMessage: " סמינר מעלות בשעה:16:30",
     visible:true
 
   },
@@ -36,11 +50,20 @@ const eventSlice = createSlice({
   name: "events",
   initialState,
   reducers: {
-    // addEvent: (state, action) => {
-    //   state.push(action.payload);
-    // },
+    addEvent: (state, action) => {
+      const existingEventIndex = state.findIndex(event => event.id === action.payload.id);
+      if (existingEventIndex !== -1) {
+        state[existingEventIndex] = action.payload; 
+      } else {
+        state.push({ ...action.payload, id: Date.now(), visible: true });
+      }
+    },
+    deleteEvent: (state, action) => {
+      return state.filter((event) => event.id !== action.payload.id);
+    },
+   
   },
 });
 
-// export const { addEvent } = eventSlice.actions;
+export const { addEvent ,deleteEvent,updateEvent} = eventSlice.actions;
 export default eventSlice.reducer;
