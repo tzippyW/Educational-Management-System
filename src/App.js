@@ -1,4 +1,5 @@
 import './App.css';
+import UserActivityPage from './features/Users/userActivity/UserActivityPage';
 import  TaskList  from './featuers/lecturer/TaskList';
 import { SelectCours } from './featuers/lecturer/SelectCours';
 import LogIn from './features/Users/LogIn';
@@ -12,6 +13,7 @@ function App() {
       <TaskList/>
       <SelectCours />
       <LogIn/>
+      <UserActivityPage/>
       </div>
   );
 }
