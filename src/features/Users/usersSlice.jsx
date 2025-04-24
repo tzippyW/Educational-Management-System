@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const usersSlice = createSlice({
-  name: 'users',
-  initialState: [
+const initialState = {
+  users: [
     {
       id: 1,
       name: 'אביגיל',
@@ -44,10 +43,27 @@ const usersSlice = createSlice({
       status: false,
     },
   ],
+  currentUser: null, // המשתמש המחובר
+};
+
+const usersSlice = createSlice({
+  name: 'users',
+  initialState,
   reducers: {
+    // פעולה שמעדכנת את המשתמש המחובר
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
     // אם תרצי להוסיף משתמש בעתיד, תוסיפי פונקציה כאן
   },
 });
 
-export const selectUsers = (state) => state.users;
+// אקשנים
+export const { setCurrentUser } = usersSlice.actions;
+
+// סלקטורים
+export const selectUsers = (state) => state.users.users;
+export const selectCurrentUser = (state) => state.users.currentUser;
+
+// הרידוסר
 export default usersSlice.reducer;
