@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addActivity } from '../features/UserActivity/userActivitySlice';
-import ActivityChart from './features/Users/userActivity/ActivityChart';
+import { addActivity } from './userActivity/userActivitySlice'; 
+import ActivityChart from './userActivity/ActivityChart';
+
 
 
 const ProfilePage = ({ currentUser }) => {

@@ -15,8 +15,7 @@ function App() {
       <SelectCours />
       <LogIn/>
       <UserActivityPage/>
-      <ProfilePage/>git pull origin feature/users
-
+      <ProfilePage/>
       </div>
   );
 }
