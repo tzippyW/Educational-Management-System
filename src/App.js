@@ -1,7 +1,7 @@
 import './App.css';
 import  TaskList  from './featuers/lecturer/TaskList';
 import { SelectCours } from './featuers/lecturer/SelectCours';
-import Users from './features/Users/Users';
+import LogIn from './features/Users/LogIn';
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
       <h1>Maalot 360</h1>
       <TaskList/>
       <SelectCours />
-      <Users/>
+      <LogIn/>
       </div>
   );
 }

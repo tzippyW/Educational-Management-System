@@ -1,4 +1,5 @@
 import usersReducer from '../features/Users/usersSlice';
+import userActivityReducer from '../features/Users/userActivity/userActivitySlice';
 import { configureStore } from '@reduxjs/toolkit'
 import chatReducer from '../features/Chat/chatSlice';
 import taskReducer from '../featuers/lecturer/taskSlice'
@@ -9,6 +10,7 @@ export const store = configureStore({
      taskSlice:taskReducer,
      chat: chatReducer,
      users: usersReducer,
+     userActivity: userActivityReducer,
   },
 })
 // בדיקה אם זה נדחף לגיט

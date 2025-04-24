@@ -7,7 +7,7 @@ import { Paper, Typography, Button, Grid, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
 
-const Users = () => {
+const LogIn = () => {
     const usersList = useSelector((state) => state.users);
     const [signIn, setSignIn] = useState({ name: '', email: '', password: '' });
     const [isActive, setIsActive] = useState(false);
@@ -74,4 +74,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default LogIn;
