@@ -5,6 +5,11 @@ import { parseISO, format } from 'date-fns';
 const ActivityChart = () => {
   const activities = useSelector((state) => state.userActivity.activities);
 
+  // אם אין פעילויות להציג
+  if (activities.length === 0) {
+    return <div>אין פעילויות להציג</div>;
+  }
+
   // הכנה של הנתונים לגרף: כמה פעילויות היו בכל יום
   const dataMap = {};
 
