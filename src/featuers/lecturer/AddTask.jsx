@@ -204,9 +204,6 @@
 
 
 
-
-
-
 // AddTask.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -232,7 +229,6 @@ export const AddTask = () => {
     const handleChange = (e) => {
         setNewTask({ ...newTask, [e.target.name]: e.target.value });
     };
-
 
         const handleSubmit = (e) => {
         e.preventDefault();
