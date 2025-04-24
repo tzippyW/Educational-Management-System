@@ -11,4 +11,5 @@ export const store = configureStore({
      chat: chatReducer
   },
 })
+// בדיקה אם זה נדחף לגיט
 
