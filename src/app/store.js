@@ -13,5 +13,4 @@ export const store = configureStore({
      userActivity: userActivityReducer,
   },
 })
-// בדיקה אם זה נדחף לגיט
 

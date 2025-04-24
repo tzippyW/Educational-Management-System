@@ -1,32 +1,39 @@
-
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'; 
 import { useNavigate } from 'react-router-dom';
-import { selectUsers } from './usersSlice';
+import { selectUsers, setCurrentUser } from './usersSlice'; 
 import { Paper, Typography, Button, Grid, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import { addActivity } from './userActivity/userActivitySlice';
 
 
 const LogIn = () => {
-    const usersList = useSelector((state) => state.users);
+    const dispatch = useDispatch(); 
+    const usersList = useSelector(selectUsers);
     const [signIn, setSignIn] = useState({ name: '', email: '', password: '' });
     const [isActive, setIsActive] = useState(false);
-    const users = useSelector(selectUsers);
     const navigate = useNavigate();
-    // נותן לשנות שדה
+
     const handleChange = (e) => {
         setSignIn({ ...signIn, [e.target.name]: e.target.value });
     };
 
-// פונקציה שבודקת האם המשתמש קיים
     const handleSubmit = (e) => {
         e.preventDefault();
         const foundUser = usersList.find(user =>
             user.email === signIn.email && user.password === signIn.password
         );
         if (foundUser) {
-            setIsActive(false);
+            dispatch(setCurrentUser(foundUser)); // ✨ שמירת המשתמש הנוכחי
+            dispatch(addActivity({
+                id: Date.now(), // או כל מזהה ייחודי
+                userId: foundUser.id,
+                type: 'התחברות',
+                url: window.location.href,
+                date: new Date().toISOString()
+              }));              
             alert('התחברת בהצלחה!');
+            // navigate('/'); // נניח שאת רוצה לחזור לדף הבית או למערכת
         } else {
             alert('משתמש לא נמצא או סיסמה שגויה');
         }
@@ -35,7 +42,7 @@ const LogIn = () => {
     return (
         <div>
             <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
-                <Typography variant="h6" gutterBottom>התחברות </Typography>
+                <Typography variant="h6" gutterBottom>התחברות</Typography>
                 <Button
                     variant="contained"
                     color="primary"
@@ -55,7 +62,6 @@ const LogIn = () => {
                             <Grid item xs={12} sm={6}>
                                 <TextField fullWidth label="סיסמא" name="password" value={signIn.password} onChange={handleChange} variant="outlined" />
                             </Grid>
-
                             <Grid item xs={12}>
                                 <Button
                                     variant="contained"

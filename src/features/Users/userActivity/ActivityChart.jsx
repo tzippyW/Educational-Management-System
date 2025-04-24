@@ -3,7 +3,12 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContai
 import { parseISO, format } from 'date-fns';
 
 const ActivityChart = () => {
-  const activities = useSelector((state) => state.userActivity.activities);
+  const currentUser = useSelector(state => state.users.currentUser);
+  const allActivities = useSelector(state => state.userActivity.activities);
+  
+  const activities = currentUser
+    ? allActivities.filter(activity => activity.userId === currentUser.id)
+    : [];    
 
   // אם אין פעילויות להציג
   if (activities.length === 0) {

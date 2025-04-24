@@ -5,8 +5,16 @@ import { Paper, Typography, Button, Grid } from '@mui/material';
 import ActivityItem from './ActivityItem';
 
 const UserActivityPage = () => {
-  const activities = useSelector(state => state.userActivity.activities);
+  // const activities = useSelector(state => state.userActivity.activities);
   const [showActivities, setShowActivities] = useState(false);
+
+  const currentUser = useSelector(state => state.users.currentUser);
+  const allActivities = useSelector(state => state.userActivity.activities);
+
+  const activities = currentUser
+    ? allActivities.filter(activity => activity.userId === currentUser.id)
+    : [];
+
 
   const toggleActivities = () => {
     setShowActivities(prevState => !prevState);
@@ -16,10 +24,10 @@ const UserActivityPage = () => {
     <div>
       <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
         <Typography variant="h6" gutterBottom>היסטוריית פעילויות</Typography>
-        
-        <Button 
-          variant="contained" 
-          color="primary" 
+
+        <Button
+          variant="contained"
+          color="primary"
           onClick={toggleActivities}
         >
           {showActivities ? 'הסתר פעילויות' : 'הצג פעילויות'}
