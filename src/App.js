@@ -3,6 +3,7 @@ import UserActivityPage from './features/Users/userActivity/UserActivityPage';
 import  TaskList  from './featuers/lecturer/TaskList';
 import { SelectCours } from './featuers/lecturer/SelectCours';
 import LogIn from './features/Users/LogIn';
+import ProfilePage from './features/Users/ProfilePage';
 
 function App() {
 
@@ -14,6 +15,8 @@ function App() {
       <SelectCours />
       <LogIn/>
       <UserActivityPage/>
+      <ProfilePage/>git pull origin feature/users
+
       </div>
   );
 }
