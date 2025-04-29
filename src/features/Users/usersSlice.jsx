@@ -5,7 +5,7 @@ const initialState = {
     {
       id: 1,
       name: 'אביגיל',
-      email: 'abigail@gmail.com',
+      email: 'avigail8214@gmail.com',
       password: '1234',
       lastActivityDate: '2025-04-21 14:30',
       status: true,
@@ -54,12 +54,18 @@ const usersSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
-    // אם תרצי להוסיף משתמש בעתיד, תוסיפי פונקציה כאן
+    updateUserPassword: (state, action) => {
+      const { email, newPassword } = action.payload;
+      const user = state.users.find((u) => u.email === email);
+      if (user) {
+        user.password = newPassword;
+      }
+    },
   },
 });
 
 // אקשנים
-export const { setCurrentUser } = usersSlice.actions;
+export const { setCurrentUser, updateUserPassword } = usersSlice.actions;
 
 // סלקטורים
 export const selectUsers = (state) => state.users.users;
