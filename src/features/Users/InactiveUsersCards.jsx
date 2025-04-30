@@ -1,45 +1,104 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Grid,
+  CardActions,
+  Box
+} from '@mui/material';
 
 function InactiveUsersCards() {
-  const users = useSelector((state) => state.users.users);
-  const inactiveUsers = users.filter((user) => !user.status);
+  const users = useSelector((state) => state.users?.users || []);
+  const inactiveUsers = users.filter((user) => user.status === false);
 
   const [selectedUser, setSelectedUser] = useState(null);
 
+  if (!users.length) {
+    return (
+      <Box display="flex" justifyContent="center" mt={5}>
+        <Typography variant="h6">לא נמצאו משתמשים במערכת.</Typography>
+      </Box>
+    );
+  }
+
   if (selectedUser) {
     return (
-      <div>
-        <h2>פרטי משתמש: {selectedUser.name}</h2>
-        <p>מייל: {selectedUser.email}</p>
-        <p>תאריך פעילות אחרון: {selectedUser.lastActivityDate}</p>
-        <button onClick={() => setSelectedUser(null)}>חזרה לרשימה</button>
-      </div>
+      <Box display="flex" flexDirection="column" alignItems="center" mt={5}>
+        <Card sx={{ minWidth: 350, padding: 3, boxShadow: 3, borderRadius: 3 }}>
+          <CardContent>
+            <Typography variant="h5" gutterBottom>
+              פרטי משתמש: {selectedUser.name}
+            </Typography>
+            <Typography variant="body1">מייל: {selectedUser.email}</Typography>
+            <Typography variant="body1">
+              תאריך פעילות אחרון: {selectedUser.lastActivityDate}
+            </Typography>
+          </CardContent>
+          <CardActions sx={{ justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setSelectedUser(null)}
+            >
+              הסתר משתמשים לא פעילים
+            </Button>
+          </CardActions>
+        </Card>
+      </Box>
     );
   }
 
   return (
-    <div>
-      <h2>משתמשים לא פעילים</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {inactiveUsers.map((user) => (
-          <div
-            key={user.id}
-            style={{
-              border: '1px solid gray',
-              borderRadius: '8px',
-              padding: '1rem',
-              cursor: 'pointer',
-            }}
-            onClick={() => setSelectedUser(user)}
-          >
-            <h3>{user.name}</h3>
-            <p>מייל: {user.email}</p>
-            <p>תאריך פעילות: {user.lastActivityDate}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Box mt={4} display="flex" flexDirection="column" alignItems="center">
+      <Typography variant="h5" gutterBottom>
+        משתמשים לא פעילים
+      </Typography>
+      {inactiveUsers.length === 0 ? (
+        <Typography variant="body1">אין משתמשים לא פעילים</Typography>
+      ) : (
+        <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: 1000 }}>
+          {inactiveUsers.map((user) => (
+            <Grid item xs={12} sm={6} md={4} key={user.id}>
+              <Card
+                sx={{
+                  padding: 2,
+                  boxShadow: 3,
+                  borderRadius: 3,
+                  transition: '0.3s',
+                  '&:hover': { boxShadow: 6 },
+                  cursor: 'pointer'
+                }}
+              >
+                <CardContent onClick={() => setSelectedUser(user)}>
+                  <Typography variant="h6" gutterBottom>
+                    {user.name}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    מייל: {user.email}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    תאריך פעילות: {user.lastActivityDate}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center' }}>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => setSelectedUser(user)}
+                  >
+                    הצג פרטים
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Box>
   );
 }
 

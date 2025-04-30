@@ -40,7 +40,7 @@ const initialState = {
       email: 'elad@site.com',
       password: 'zxcv',
       lastActivityDate: '2025-04-17 22:05',
-      status: false,
+      status: true,
     },
   ],
   currentUser: null, // המשתמש המחובר
