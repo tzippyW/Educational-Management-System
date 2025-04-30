@@ -1,4 +1,6 @@
 
+import TaskList from './featuers/lecturer/TaskList';
+import { SelectCours } from './featuers/lecturer/SelectCours';
 import EditProfileModal from './features/Users/EditProfileModal';
 import LogIn from './features/Users/LogIn';
 import ProfilePage from './features/Users/ProfilePage';
@@ -11,6 +13,9 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Maalot 360</h1>
+       <TaskList />
+      <SelectCours />
       {!currentUser ? (
         <LogIn />
       ) : (
