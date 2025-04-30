@@ -8,7 +8,7 @@ const initialState = {
       email: 'avigail8214@gmail.com',
       password: '1234',
       lastActivityDate: '2025-04-21 14:30',
-      status: true,
+      status: false,
     },
     {
       id: 2,
