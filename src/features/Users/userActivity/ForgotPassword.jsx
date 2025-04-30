@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUsers, updateUserPassword } from '../usersSlice';
+import { selectUsers, updateUserPassword } from '../usersSlice';  // שים לב לשינוי כאן
 import { Paper, Typography, TextField, Button, Alert } from '@mui/material';
 
 const ForgotPassword = ({ onBackToLogin }) => {
@@ -13,7 +13,7 @@ const ForgotPassword = ({ onBackToLogin }) => {
     const user = users.find(u => u.email === email);
     if (user) {
       const newPassword = Math.random().toString(36).slice(-8); // סיסמה רנדומלית
-      dispatch(updateUserPassword({ email, newPassword })); // שמירת סיסמה חדשה ב־Redux
+      dispatch(updateUserPassword({ email, newPassword }));  // השתמש ב-`updateUserPassword` במקום `updateUser`
       setMessage(`סיסמה חדשה נשלחה לכתובת ${email}: ${newPassword}`);
     } else {
       setMessage('האימייל לא קיים במערכת');
