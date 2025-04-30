@@ -1,26 +1,32 @@
+import React from 'react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+} from 'recharts';
 import { useSelector } from 'react-redux';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
-import { parseISO, format } from 'date-fns';
+import { format, subDays, isAfter } from 'date-fns';
 
 const ActivityChart = () => {
-  const currentUser = useSelector(state => state.users.currentUser);
-  const allActivities = useSelector(state => state.userActivity.activities);
-  
-  const activities = currentUser
-    ? allActivities.filter(activity => activity.userId === currentUser.id)
-    : [];    
+  // שלפנו את הפעילויות ממקום נכון
+  const activities = useSelector((state) => state.userActivity.activities) || [];
 
-  // אם אין פעילויות להציג
-  if (activities.length === 0) {
-    return <div>אין פעילויות להציג</div>;
+  const oneWeekAgo = subDays(new Date(), 7);
+
+  // מסנן רק פעילויות מהשבוע האחרון
+  const recentActivities = activities.filter((activity) => {
+    const date = new Date(activity.date);
+    return isAfter(date, oneWeekAgo);
+  });
+
+  if (recentActivities.length === 0) {
+    return <div style={{ textAlign: 'center', marginTop: '1rem' }}>אין פעילויות בשבוע האחרון</div>;
   }
 
-  // הכנה של הנתונים לגרף: כמה פעילויות היו בכל יום
+  // סופר כמה פעילויות היו בכל יום
   const dataMap = {};
-
-  activities.forEach((activity) => {
-    const date = format(parseISO(activity.date), 'yyyy-MM-dd');
-    dataMap[date] = (dataMap[date] || 0) + 1;
+  recentActivities.forEach((activity) => {
+    const date = new Date(activity.date);
+    const formatted = format(date, 'yyyy-MM-dd');
+    dataMap[formatted] = (dataMap[formatted] || 0) + 1;
   });
 
   const data = Object.entries(dataMap).map(([date, count]) => ({
@@ -29,18 +35,18 @@ const ActivityChart = () => {
   }));
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-2">גרף פעילות לפי תאריך</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Line type="monotone" dataKey="count" stroke="#8884d8" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data} margin={{ top: 10, right: 30, left: 10, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" tickFormatter={(str) => format(new Date(str), 'dd/MM')} />
+        <YAxis allowDecimals={false} />
+        <Tooltip
+          labelFormatter={(label) => `תאריך: ${format(new Date(label), 'dd/MM/yyyy')}`}
+          formatter={(value) => [`${value} פעילויות`, 'מספר']}
+        />
+        <Bar dataKey="count" fill="#82ca9d" />
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
