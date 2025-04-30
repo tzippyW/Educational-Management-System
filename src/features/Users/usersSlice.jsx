@@ -48,16 +48,17 @@ const initialState = {
 
 const usersSlice = createSlice({
   name: 'users',
-  initialState: {
-    users: [
-      // דוגמה
-      { id: 1, name: 'אביגיל', email: 'avigail8214@gmail.com', password: '1234', status: 'active' }
-    ],
-    currentUser: null,
-  },
+  initialState,
   reducers: {
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
+    },
+    updateUserPassword: (state, action) => {
+      const { email, newPassword } = action.payload;
+      const user = state.users.find(user => user.email === email);
+      if (user) {
+        user.password = newPassword;
+      }
     },
     updateUserInList: (state, action) => {
       const index = state.users.findIndex(user => user.id === action.payload.id);
