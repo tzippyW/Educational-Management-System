@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import EditProfileModal from './EditProfileModal';
+import { Button } from '@mui/material';
 
 const ProfilePage = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
@@ -14,7 +15,25 @@ const ProfilePage = () => {
       <p>אימייל: {currentUser.email}</p>
       <p>סיסמה: {currentUser.password}</p>
 
-      <button onClick={() => setIsEditOpen(true)}>ערוך פרופיל</button>
+      <Button
+        onClick={() => setIsEditOpen(true)}
+        sx={{
+          backgroundColor: '#1976d2',
+          color: '#fff',
+          padding: '10px 24px',
+          borderRadius: '8px',
+          fontWeight: 'bold',
+          textTransform: 'none',
+          boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+          transition: '0.3s',
+          '&:hover': {
+            backgroundColor: '#115293',
+            transform: 'scale(1.03)',
+          },
+        }}
+      >
+        ערוך פרופיל
+      </Button>
 
       {/* הטופס יוצג רק כשהמשתמש לוחץ על הכפתור */}
       {isEditOpen && (
