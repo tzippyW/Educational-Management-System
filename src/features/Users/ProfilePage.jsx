@@ -1,64 +1,30 @@
-// import React, { useEffect } from 'react';  // הייבוא של useEffect מ-React
-// import { useDispatch, useSelector } from 'react-redux';  // useDispatch ו-useSelector מ-React Redux
-// import { addActivity } from './userActivity/userActivitySlice'; 
-// import ActivityChart from './userActivity/ActivityChart';  // ייבוא הגרף
-// import { formatISO, subDays } from 'date-fns';
-// import { selectCurrentUser } from './usersSlice';
-
-// const ProfilePage = ({ currentUser }) => {
-//     const dispatch = useDispatch();
-//     const user = useSelector(selectCurrentUser);  // השתמש ב-selectCurrentUser
-
-//     useEffect(() => {
-//         if (currentUser?.id) {  
-//             dispatch(addActivity({
-//                 id: Date.now(),
-//                 userId: currentUser.id,
-//                 type: 'כניסה לפרופיל',
-//                 url: window.location.href,
-//                 date: new Date().toISOString()
-//             }));
-//         }
-//     }, [currentUser]);
-    
-
-//     return (
-//         <div>
-//             <h1>שלום, {currentUser ? currentUser.name : 'אורח'}</h1>
-//             {user && <p>הי, {user.name}!</p>} {/* הצגת שם המשתמש */}
-//         </div>
-//     );
-// };
-
-// export default ProfilePage;
-
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import EditProfileModal from './EditProfileModal';
 
-const ProfilePage = ({ currentUser }) => {
-  const [formData, setFormData] = useState({
-    name: currentUser.name,
-    email: currentUser.email,
-    password: currentUser.password, // או כל שדה שיש לך
-  });
+const ProfilePage = () => {
+  const currentUser = useSelector((state) => state.users.currentUser);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-  };
+  if (!currentUser) return <p>יש להתחבר מחדש</p>;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("שומרים פרטים...", formData);
-    // כאן תשלחי דיספאץ' לעדכון המשתמש
-  };
+  return (
+    <div style={{ textAlign: 'center', padding: '30px' }}>
+      <h2>שלום, {currentUser.name}!</h2>
+      <p>אימייל: {currentUser.email}</p>
+      <p>סיסמה: {currentUser.password}</p>
 
-  // return (
-    // <form onSubmit={handleSubmit}>
-      {/* <label>שם: <input name="name" value={formData.name} onChange={handleChange} /></label> */}
-      {/* <label>אימייל: <input name="email" value={formData.email} onChange={handleChange} /></label> */}
-      {/* <label>סיסמה: <input name="password" value={formData.password} onChange={handleChange} /></label> */}
-      // <button type="submit">שמור</button>
-    // </form>
-  // );
+      <button onClick={() => setIsEditOpen(true)}>ערוך פרופיל</button>
+
+      {/* הטופס יוצג רק כשהמשתמש לוחץ על הכפתור */}
+      {isEditOpen && (
+        <EditProfileModal 
+          user={currentUser}
+          onClose={() => setIsEditOpen(false)}
+        />
+      )}
+    </div>
+  );
 };
 
 export default ProfilePage;

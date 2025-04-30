@@ -48,24 +48,28 @@ const initialState = {
 
 const usersSlice = createSlice({
   name: 'users',
-  initialState,
+  initialState: {
+    users: [
+      // דוגמה
+      { id: 1, name: 'אביגיל', email: 'avigail8214@gmail.com', password: '1234', status: 'active' }
+    ],
+    currentUser: null,
+  },
   reducers: {
-    // פעולה שמעדכנת את המשתמש המחובר
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
-    updateUserPassword: (state, action) => {
-      const { email, newPassword } = action.payload;
-      const user = state.users.find((u) => u.email === email);
-      if (user) {
-        user.password = newPassword;
+    updateUserInList: (state, action) => {
+      const index = state.users.findIndex(user => user.id === action.payload.id);
+      if (index !== -1) {
+        state.users[index] = action.payload;
       }
     },
   },
 });
 
 // אקשנים
-export const { setCurrentUser, updateUserPassword } = usersSlice.actions;
+export const { setCurrentUser, updateUserPassword, updateUserInList } = usersSlice.actions;
 
 // סלקטורים
 export const selectUsers = (state) => state.users.users;
