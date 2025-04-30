@@ -5,7 +5,7 @@ const initialState = {
     {
       id: 1,
       name: 'אביגיל',
-      email: 'abigail@gmail.com',
+      email: 'avigail8214@gmail.com',
       password: '1234',
       lastActivityDate: '2025-04-21 14:30',
       status: true,
@@ -48,18 +48,28 @@ const initialState = {
 
 const usersSlice = createSlice({
   name: 'users',
-  initialState,
+  initialState: {
+    users: [
+      // דוגמה
+      { id: 1, name: 'אביגיל', email: 'avigail8214@gmail.com', password: '1234', status: 'active' }
+    ],
+    currentUser: null,
+  },
   reducers: {
-    // פעולה שמעדכנת את המשתמש המחובר
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
-    // אם תרצי להוסיף משתמש בעתיד, תוסיפי פונקציה כאן
+    updateUserInList: (state, action) => {
+      const index = state.users.findIndex(user => user.id === action.payload.id);
+      if (index !== -1) {
+        state.users[index] = action.payload;
+      }
+    },
   },
 });
 
 // אקשנים
-export const { setCurrentUser } = usersSlice.actions;
+export const { setCurrentUser, updateUserPassword, updateUserInList } = usersSlice.actions;
 
 // סלקטורים
 export const selectUsers = (state) => state.users.users;
