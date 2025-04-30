@@ -16,6 +16,7 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <BrowserRouter>
+                <h1>Hello</h1>
                 <Routes>
                 <Route path="/add-questions/:taskName/course/:courseName" element={<AddQuestions />} />
                     <Route path="/" element={<SelectCours />} />
