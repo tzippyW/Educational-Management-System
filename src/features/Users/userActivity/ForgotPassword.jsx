@@ -1,6 +1,9 @@
+
+
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUsers, updateUserPassword } from '../usersSlice';  // שים לב לשינוי כאן
+import { selectUsers, updateUserPassword } from '../usersSlice';
+import { addActivity } from './userActivitySlice';
 import { Paper, Typography, TextField, Button, Alert } from '@mui/material';
 
 const ForgotPassword = ({ onBackToLogin }) => {
@@ -11,10 +14,22 @@ const ForgotPassword = ({ onBackToLogin }) => {
 
   const handleReset = () => {
     const user = users.find(u => u.email === email);
+
     if (user) {
-      const newPassword = Math.random().toString(36).slice(-8); // סיסמה רנדומלית
-      dispatch(updateUserPassword({ email, newPassword }));  // השתמש ב-`updateUserPassword` במקום `updateUser`
+      const newPassword = Math.random().toString(36).slice(-8);
+      dispatch(updateUserPassword({ email, newPassword }));
       setMessage(`סיסמה חדשה נשלחה לכתובת ${email}: ${newPassword}`);
+
+      // 👇 נוסיף היסטוריית פעילות על המשתמש הזה
+      dispatch(
+        addActivity({
+          id: Date.now(),
+          userId: user.id, // לא currentUser כי המשתמש לא מחובר
+          type: 'שחזור סיסמה',
+          url: window.location.href,
+          date: new Date().toISOString(),
+        })
+      );
     } else {
       setMessage('האימייל לא קיים במערכת');
     }

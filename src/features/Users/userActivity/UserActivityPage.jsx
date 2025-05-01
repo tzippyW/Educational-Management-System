@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Paper, Typography, Button, Grid } from '@mui/material';
 import ActivityItem from './ActivityItem';
 
+
 const UserActivityPage = () => {
   const activities = useSelector(state => state.userActivity.activities);
   const [showActivities, setShowActivities] = useState(false);

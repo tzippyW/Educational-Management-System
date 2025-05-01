@@ -1,13 +1,30 @@
+
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addActivity } from './userActivity/userActivitySlice'; // ודא שהייבוא נכון
 import EditProfileModal from './EditProfileModal';
 import { Button } from '@mui/material';
 
 const ProfilePage = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const dispatch = useDispatch();
 
   if (!currentUser) return <p>יש להתחבר מחדש</p>;
+
+  const handleEditClick = () => {
+    setIsEditOpen(true);
+    // הוספת הפעילות להיסטוריה
+    dispatch(
+      addActivity({
+        id: Date.now(),
+        userId: currentUser.id,
+        type: 'עריכת פרופיל',
+        url: window.location.href,
+        date: new Date().toISOString()
+      })
+    );
+  };
 
   return (
     <div style={{ textAlign: 'center', padding: '30px' }}>
@@ -16,7 +33,7 @@ const ProfilePage = () => {
       <p>סיסמה: {currentUser.password}</p>
 
       <Button
-        onClick={() => setIsEditOpen(true)}
+        onClick={handleEditClick} // השתמש בפונקציה החדשה
         sx={{
           backgroundColor: '#1976d2',
           color: '#fff',
@@ -47,3 +64,4 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
