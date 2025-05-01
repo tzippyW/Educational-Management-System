@@ -1,5 +1,8 @@
+
+
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addActivity } from './userActivity/userActivitySlice';
 import {
   Card,
   CardContent,
@@ -11,6 +14,7 @@ import {
 } from '@mui/material';
 
 function InactiveUsersCards() {
+  const dispatch = useDispatch();
   const users = useSelector((state) => state.users?.users || []);
   const inactiveUsers = users.filter((user) => user.status === false);
 
@@ -25,6 +29,17 @@ function InactiveUsersCards() {
   }
 
   if (selectedUser) {
+    // שולחים את הפעילות של הצגת פרופיל
+    dispatch(
+      addActivity({
+        id: Date.now(), // מייצר id ייחודי לכל פעילות
+        userId: selectedUser.id,
+        type: 'הצגת פרופיל משתמש לא פעיל', // סיווג הפעולה
+        url: window.location.href, // כתובת הדף (אפשר גם לעדכן לפי הצורך)
+        date: new Date().toISOString(), // תאריך הפעולה
+      })
+    );
+
     return (
       <Box display="flex" flexDirection="column" alignItems="center" mt={5}>
         <Card sx={{ minWidth: 350, padding: 3, boxShadow: 3, borderRadius: 3 }}>
@@ -43,7 +58,7 @@ function InactiveUsersCards() {
               color="primary"
               onClick={() => setSelectedUser(null)}
             >
-              הסתר משתמשים לא פעילים
+              הסתר פרטים
             </Button>
           </CardActions>
         </Card>

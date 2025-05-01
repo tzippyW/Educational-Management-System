@@ -81,7 +81,7 @@ function App() {
             onClick={() => setShowInactiveUsers(!showInactiveUsers)}
             style={{ margin: '10px 0' }}
           >
-            {showInactiveUsers ? 'חזרה לפרופיל' : 'הצג משתמשים לא פעילים'}
+            {showInactiveUsers ? ' הסתר משתמשים לא פעילים' : 'הצג משתמשים לא פעילים'}
           </Button>
 
           {showInactiveUsers ? (

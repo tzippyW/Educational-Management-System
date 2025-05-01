@@ -26,7 +26,7 @@ const ForgotPassword = ({ onBackToLogin }) => {
           id: Date.now(),
           userId: user.id, // לא currentUser כי המשתמש לא מחובר
           type: 'שחזור סיסמה',
-          url: window.location.href,
+        url: window.location.pathname,
           date: new Date().toISOString(),
         })
       );
