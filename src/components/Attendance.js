@@ -1,10 +1,18 @@
 import React from 'react';
+import MarkAttendance from '../features/Attendance/MarkAttendance ';
+import ViewAllAttendance from'../features/Attendance/ViewAllAttendance';
+import StudentAttendanceByCourse from'../features/Attendance/StudentAttendanceByCourse'
+
+
 
 const Attendance = () => {
   return (
     <div>
-      <h1>Attendance</h1>
-      <p>Attendance details...</p>
+ 
+ <MarkAttendance />
+      <ViewAllAttendance/>
+      <StudentAttendanceByCourse/>
+
     </div>
   );
 };
