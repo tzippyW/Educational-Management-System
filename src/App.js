@@ -1,5 +1,3 @@
-
-
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
@@ -12,6 +10,7 @@ import Attendance from './components/Attendance';
 import Chat from './components/Chat';
 import Navbar from './components/Navbar';
 import Users from './components/Users';
+import Todos from './components/Todos';
 
 
 function App() {
@@ -25,6 +24,7 @@ function App() {
         <Route path="/teachers" element={<Teachers />} />
         <Route path="/events" element={<Events />} />
         <Route path="/tasks" element={<Tasks />} />
+        <Route path="/todos" element={<Todos />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/users" element={<Users />} />
@@ -34,4 +34,3 @@ function App() {
 }
 
 export default App;
-
