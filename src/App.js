@@ -1,46 +1,36 @@
-// import React from 'react';
-// import { Container, Typography } from '@mui/material';
-// import AddTask from './features/tasks/AddTask';
-// import TaskList from './features/tasks/TaskList';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import Courses from './components/Courses';
+import Students from './components/Students';
+import Teachers from './components/Teachers';
+import Events from './components/Events';
+import Tasks from './components/Tasks';
+import Attendance from './components/Attendance';
+import Chat from './components/Chat';
+import Navbar from './components/Navbar';
+import Users from './components/Users';
+import Todos from './components/Todos';
 
-// const App = () => {
-//   return (
-//     <Container>
-//       <Typography variant="h3" gutterBottom mt={4}>
-//         המשימות שלי
-//       </Typography>
-//       <AddTask />
-//       <TaskList />
-//     </Container>
-//   );
-// };
 
-// export default App;
-import React from 'react';
-import { Container, Paper, Typography, Box } from '@mui/material';
-import AddTask   from './features/tasks/AddTask';
-import FilterBar from './features/tasks/FilterBar';    // <–– כאן
-import TaskList  from './features/tasks/TaskList';
-
-export default function App() {
+function App() {
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          המשימות שלי
-        </Typography>
-
-        <Box sx={{ mb: 3 }}>
-          <AddTask />
-        </Box>
-
-        <Box sx={{ mb: 2 }}>
-          <FilterBar />                             
-        </Box>
-
-        <TaskList />
-      </Paper>
-    </Container>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/students" element={<Students />} />
+        <Route path="/teachers" element={<Teachers />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/todos" element={<Todos />} />
+        <Route path="/attendance" element={<Attendance />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/users" element={<Users />} />
+      </Routes>
+    </>
   );
 }
 
+export default App;
