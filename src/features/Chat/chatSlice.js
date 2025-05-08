@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  chats: [
-      { id: 1,  from: 'hadasa&tzippy', fromId: '1111', createDate: new Date(),  deleted: false, text: 'Hello' },
-  ]
-};
+// Removed the unused initialState variable
 const chatSlice = createSlice({
   name: 'chat',
   initialState: {
@@ -29,10 +25,10 @@ const chatSlice = createSlice({
       if (existingMessage) {
         existingMessage.text = text;
       }
-  },
+    },
   },
 });
 //, setStatus
-export const { addMessage, deleteMessages,updateMessage } = chatSlice.actions;
+export const { addMessage, deleteMessages, updateMessage } = chatSlice.actions;
 
 export default chatSlice.reducer;
