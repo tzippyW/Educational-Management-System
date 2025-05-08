@@ -11,6 +11,7 @@ import Chat from './components/Chat';
 import Navbar from './components/Navbar';
 import Users from './components/Users';
 import Todos from './components/Todos';
+import Items from './components/Items';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/items" element={<Items />} />
       </Routes>
     </>
   );
