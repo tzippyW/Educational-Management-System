@@ -13,6 +13,7 @@ const Navbar = () => {
         <li><Link to="/tasks">Tasks</Link></li>
         <li><Link to="/attendance">Attendance</Link></li>
         <li><Link to="/chat">Chat</Link></li>
+        <li><Link to="/users">Users</Link></li>
       </ul>
     </nav>
   );

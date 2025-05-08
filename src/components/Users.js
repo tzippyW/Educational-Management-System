@@ -1,15 +1,15 @@
 import React from 'react';
 import { useState } from 'react'; 
-
-import LogIn from './features/Users/LogIn';
 import { useSelector } from 'react-redux';
-import InactiveUsersCards from './features/Users/InactiveUsersCards';
-import ProfileMenuWrapper from './features/Users/ProfileMenuWrapper';
+
+import LogIn from '../features/Users/LogIn';
+import InactiveUsersCards from '../features/Users/InactiveUsersCards';
+import ProfileMenuWrapper from '../features/Users/ProfileMenuWrapper';
 import { Button } from '@mui/material';
 
 
 const Users = () => {
-  const currentUser = useSelector((state) => state.users.currentUser);
+  const currentUser = useSelector((state) => {debugger; return state.users.currentUser});
   const [showInactiveUsers, setShowInactiveUsers] = useState(false);
 
 
