@@ -7,7 +7,8 @@ import usersReducer from '../features/Users/usersSlice';
 import userActivityReducer from '../features/Users/userActivity/userActivitySlice';
 import tasksReducer from '../features/tasks/tasksSlice';
 import ListSlice from '../features/Items/ListSlice.js'; // ודאי שהשם כאן תואם גם בקובץ עצמו
-
+import taskSlice from '../features/lecturer/taskSlice'
+import questionSlice from '../features/lecturer/questionSlice'
 
 
 export const store = configureStore({
@@ -17,7 +18,9 @@ export const store = configureStore({
          users: usersReducer,
          userActivity: userActivityReducer,
          tasks: tasksReducer,
-         ListSlice: ListSlice
+         ListSlice: ListSlice,
+         taskSlice: taskSlice,
+         questions: questionSlice,  
 
     
   },
