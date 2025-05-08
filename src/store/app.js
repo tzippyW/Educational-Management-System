@@ -6,6 +6,9 @@ import updateReducer from "../features/update/UpdatesSlice";
 import usersReducer from '../features/Users/usersSlice';
 import userActivityReducer from '../features/Users/userActivity/userActivitySlice';
 import tasksReducer from '../features/tasks/tasksSlice';
+import ListSlice from '../features/Items/ListSlice.js'; // ודאי שהשם כאן תואם גם בקובץ עצמו
+
+
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +16,8 @@ export const store = configureStore({
          updates: updateReducer,
          users: usersReducer,
          userActivity: userActivityReducer,
-         tasks: tasksReducer
+         tasks: tasksReducer,
+         ListSlice: ListSlice
 
     
   },
