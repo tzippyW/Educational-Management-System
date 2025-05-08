@@ -1,4 +1,5 @@
-import logo from './logo.svg';
+
+
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
@@ -10,6 +11,7 @@ import Tasks from './components/Tasks';
 import Attendance from './components/Attendance';
 import Chat from './components/Chat';
 import Navbar from './components/Navbar';
+import Users from './components/Users';
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </>
   );
