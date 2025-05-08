@@ -1,98 +1,37 @@
 
 
-// import { useState } from 'react'; 
-// import TaskList from './featuers/lecturer/TaskList';
-// import { SelectCours } from './featuers/lecturer/SelectCours';
-// import EditProfileModal from './features/Users/EditProfileModal';
-// import LogIn from './features/Users/LogIn';
-// import ProfilePage from './features/Users/ProfilePage';
-// import ActivityChart from './features/Users/userActivity/ActivityChart';
-// import UserActivityPage from './features/Users/userActivity/UserActivityPage';
-// import { useSelector } from 'react-redux';
-// import InactiveUsersCards from './features/Users/InactiveUsersCards';
-// import ProfileMenuWrapper from './features/Users/ProfileMenuWrapper';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import Courses from './components/Courses';
+import Students from './components/Students';
+import Teachers from './components/Teachers';
+import Events from './components/Events';
+import Tasks from './components/Tasks';
+import Attendance from './components/Attendance';
+import Chat from './components/Chat';
+import Navbar from './components/Navbar';
+import Users from './components/Users';
 
-// function App() {
-//   const currentUser = useSelector((state) => state.users.currentUser);
-//   const [showInactiveUsers, setShowInactiveUsers] = useState(false);
-
-//   return (
-//     <div className="App">
-//       <h1>Maalot 360</h1>
-//       <TaskList />
-//       <SelectCours />
-//       {!currentUser ? (
-//         <LogIn />
-//       ) : (
-//         <>
-//               {currentUser ? <ProfileMenuWrapper /> : <LogIn />}
-
-//           <button onClick={() => setShowInactiveUsers(!showInactiveUsers)}>
-//             {showInactiveUsers ? 'חזרה לפרופיל' : 'הצג משתמשים לא פעילים'}
-//           </button>
-
-//           {showInactiveUsers ? (
-//             <InactiveUsersCards />
-//           ) : (
-//             <>
-//               <button onClick={() => console.log("היסטוריית פעילות")}>
-//                 היסטוריית פעילות
-//               </button>
-//             </>
-//           )}
-//         </>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
-import { useState } from 'react'; 
-import TaskList from './featuers/lecturer/TaskList';
-import { SelectCours } from './featuers/lecturer/SelectCours';
-import EditProfileModal from './features/Users/EditProfileModal';
-import LogIn from './features/Users/LogIn';
-import ProfilePage from './features/Users/ProfilePage';
-import ActivityChart from './features/Users/userActivity/ActivityChart';
-import UserActivityPage from './features/Users/userActivity/UserActivityPage';
-import { useSelector } from 'react-redux';
-import InactiveUsersCards from './features/Users/InactiveUsersCards';
-import ProfileMenuWrapper from './features/Users/ProfileMenuWrapper';
-import { Button } from '@mui/material';
 
 function App() {
-  const currentUser = useSelector((state) => state.users.currentUser);
-  const [showInactiveUsers, setShowInactiveUsers] = useState(false);
-
   return (
-    <div className="App">
-      <h1>Maalot 360</h1>
-      <TaskList />
-      <SelectCours />
-      {!currentUser ? (
-        <LogIn />
-      ) : (
-        <>
-          {currentUser ? <ProfileMenuWrapper /> : <LogIn />}
-          
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setShowInactiveUsers(!showInactiveUsers)}
-            style={{ margin: '10px 0' }}
-          >
-            {showInactiveUsers ? ' הסתר משתמשים לא פעילים' : 'הצג משתמשים לא פעילים'}
-          </Button>
-
-          {showInactiveUsers ? (
-            <InactiveUsersCards />
-          ) : (
-            <></>  
-          )}
-        </>
-      )}
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/students" element={<Students />} />
+        <Route path="/teachers" element={<Teachers />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/attendance" element={<Attendance />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/users" element={<Users />} />
+      </Routes>
+    </>
   );
 }
 
 export default App;
+

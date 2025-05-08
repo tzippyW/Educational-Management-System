@@ -1,5 +1,5 @@
 {
-  "homepage": "https://AutoDidact613.github.io/Maalot360",
+  "homepage": ".",
   "name": "maalot360",
   "version": "0.1.0",
   "private": true,
@@ -15,8 +15,11 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "date-fns": "^4.1.0",
+    "cra-template": "1.2.0",
     "gh-pages": "^6.3.0",
+    "moment": "^2.30.1",
     "react": "^19.0.0",
+    "react-big-calendar": "^1.18.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.4.0",
