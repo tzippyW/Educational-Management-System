@@ -10,21 +10,24 @@ import ListSlice from '../features/Items/ListSlice.js'; // ודאי שהשם כ�
 import taskSlice from '../features/lecturer/taskSlice'
 import questionSlice from '../features/lecturer/questionSlice'
 import attendanceReduce from '../features/Attendance/attendanceSlice'
+import studentSlice from "../features/students/studentSlice";
 
 
 export const store = configureStore({
   reducer: {
-         events: eventReducer,
-         updates: updateReducer,
-         users: usersReducer,
-         userActivity: userActivityReducer,
-         tasks: tasksReducer,
-         ListSlice: ListSlice,
-         taskSlice: taskSlice,
-         questions: questionSlice, 
-         attendance: attendanceReduce 
+    events: eventReducer,
+    updates: updateReducer,
+    users: usersReducer,
+    userActivity: userActivityReducer,
+    tasks: tasksReducer,
+    ListSlice: ListSlice,
+    taskSlice: taskSlice,
+    questions: questionSlice,
+    attendance: attendanceReduce,
+    users: studentSlice,
 
-    
+
+
   },
 })
 

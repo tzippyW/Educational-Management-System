@@ -1,0 +1,84 @@
+/* כיסוי רקע כאשר הטופס פתוח */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6); /* רקע כהה */
+    backdrop-filter: blur(8px); /* טשטוש הרקע */
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* עיצוב כללי לטופס */
+.add-student-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* אנימציה קלה לפתיחת הטופס */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* כותרת */
+.add-student-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* תוויות ושדות קלט */
+.add-student-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.add-student-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border 0.3s;
+}
+
+.add-student-form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* כפתור הוספה */
+.add-student-form button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.add-student-form button:hover {
+    background: #0056b3;
+}

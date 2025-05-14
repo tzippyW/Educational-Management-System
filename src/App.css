@@ -1,3 +1,22 @@
+h1 {
+  color: darkblue
+}
+
+* {
+  text-align: center;
+  direction:rtl;
+}
+
+body{
+  /* display: flex; */
+  /* padding:5rem; */
+  /* background-color:rgb(189, 189, 189) */
+}
+
+.page{
+  /* flex-grow:1 */
+}
+
 .rbc-event {
   display: flex;
   align-items: center;
