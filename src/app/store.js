@@ -11,6 +11,7 @@ import taskSlice from '../features/lecturer/taskSlice'
 import questionSlice from '../features/lecturer/questionSlice'
 import attendanceReduce from '../features/Attendance/attendanceSlice'
 import studentSlice from "../features/students/studentSlice";
+import courseSlice from "../features/courses/courseSlice.js";
 
 
 export const store = configureStore({
@@ -25,6 +26,7 @@ export const store = configureStore({
     questions: questionSlice,
     attendance: attendanceReduce,
     users: studentSlice,
+    courses:courseSlice
 
 
 
