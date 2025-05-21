@@ -70,12 +70,7 @@ export default function ChatComponent() {
     }
   }, [dispatch]);
 
-  // React.useEffect(() => {
-  //   localStorage.setItem('chatMessages', JSON.stringify(messages));
-  //   if (bottomRef.current) {
-  //     bottomRef.current.scrollIntoView({ behavior: 'smooth' });
-  //   }
-  // }, [messages]);
+ 
   React.useEffect(() => {
     localStorage.setItem('chatMessages', JSON.stringify(messages));
     if (bottomRef.current) {

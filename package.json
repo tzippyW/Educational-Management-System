@@ -1,5 +1,5 @@
 {
-  "homepage": "https://AutoDidact613.github.io/Maalot360",
+  "homepage": ".",
   "name": "maalot360",
   "version": "0.1.0",
   "private": true,
@@ -11,7 +11,8 @@
     "@fontsource/roboto": "^5.2.5",
     "@mui/icons-material": "^7.0.1",
     "@mui/joy": "^5.0.0-beta.52",
-    "@mui/material": "^7.0.1",
+    "@mui/material": "^7.1.0",
+    "@mui/x-date-pickers": "^8.4.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -20,23 +21,25 @@
     "emoji-mart": "^5.6.0",
     "emoji-picker-react": "^4.12.2",
     "gh-pages": "^6.3.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "https-browserify": "^1.0.0",
+    "moment": "^2.30.1",
+    "react": "^18.2.0",
+    "react-big-calendar": "^1.18.0",
+    "react-datepicker": "^8.3.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.4.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-
+    "recharts": "^2.15.3",
     "swiper": "^11.2.6",
+    "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

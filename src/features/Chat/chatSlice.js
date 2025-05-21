@@ -30,7 +30,7 @@ const chatSlice = createSlice({
         state.messages[chatName][index] = newMessage;
       }
     },
-    
+
     deleteMessage: (state, action) => {
       const { chatName, index } = action.payload;
     

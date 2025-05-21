@@ -1,23 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  tasks: [],  // רשימת המשימות
-};
+import { createSlice } from '@reduxjs/toolkit';
 
 const tasksSlice = createSlice({
   name: 'tasks',
-  initialState,
+  initialState: {
+    tasks: [],
+    filter: 'all',
+  },
   reducers: {
-
     addTask: (state, action) => {
-      state.tasks.push(action.payload);
+      const { text, dueDate, isImportant } = action.payload;
+      state.tasks.push({
+        id: Date.now(),
+        text,
+        dueDate: dueDate || null,
+        isImportant: isImportant || false,
+        isCompleted: false,
+      });
     },
-
-    removeTask: (state, action) => {
-      state.tasks = state.tasks.filter(task => task.id !== action.payload);
+    updateTask: (state, action) => {
+      const { id, updatedTask } = action.payload;
+      const task = state.tasks.find((t) => t.id === id);
+      if (task) Object.assign(task, updatedTask);
     },
-},
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter((t) => t.id !== action.payload.id);
+    },
+    toggleImportant: (state, action) => {
+      const task = state.tasks.find((t) => t.id === action.payload.id);
+      if (task) task.isImportant = !task.isImportant;
+    },
+    toggleCompleted: (state, action) => {
+      const task = state.tasks.find((t) => t.id === action.payload.id);
+      if (task) task.isCompleted = !task.isCompleted;
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
 });
 
-export const { addTask, removeTask } = tasksSlice.actions;
+export const {
+  addTask,
+  updateTask,
+  deleteTask,
+  toggleImportant,
+  toggleCompleted,
+  setFilter,
+} = tasksSlice.actions;
 export default tasksSlice.reducer;
