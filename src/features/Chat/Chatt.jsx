@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import {
   Box, Button, FormControl, FormLabel, Textarea, Input,
@@ -18,6 +17,11 @@ import { addMessage, deleteMessage, updateMessage, clearMessages } from './chatS
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
+
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { setCurrentChat } from './chatSlice';
+
+
 export default function ChatComponent() {
   const [message, setMessage] = React.useState('');
   const [italic, setItalic] = React.useState(false);
@@ -36,21 +40,49 @@ export default function ChatComponent() {
 
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.Chatt.messages);
+  const currentChat = useSelector((state) => state.Chatt.currentChat);
+
+
+  const [menuAnchor, setMenuAnchor] = React.useState(null);
+
 
   React.useEffect(() => {
     const saved = localStorage.getItem('chatMessages');
     if (saved) {
       const msgs = JSON.parse(saved);
-      msgs.forEach(msg => dispatch(addMessage(msg)));
+
+      if (typeof msgs === 'object' && msgs !== null) {
+        // איחוד רשימת הצ'אטים הקיימת עם הצ'אטים המוגדרים כברירת מחדל
+        const updatedMessages = {
+          REACT: [],
+          "C#": [],
+          JAVA: [],
+          ANGULAR: [],
+          ...msgs,
+        };
+
+        Object.entries(updatedMessages).forEach(([chatName, chatMessages]) => {
+          chatMessages.forEach((msg) => {
+            dispatch(addMessage({ chatName, message: msg }));
+          });
+        });
+      }
     }
   }, [dispatch]);
 
+  // React.useEffect(() => {
+  //   localStorage.setItem('chatMessages', JSON.stringify(messages));
+  //   if (bottomRef.current) {
+  //     bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // }, [messages]);
   React.useEffect(() => {
     localStorage.setItem('chatMessages', JSON.stringify(messages));
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages]);
+  }, [messages, currentChat]);
+
 
   const handleSend = () => {
     if (!message.trim()) return;
@@ -69,17 +101,22 @@ export default function ChatComponent() {
     };
 
     if (editIndex !== null) {
-      dispatch(updateMessage({ index: editIndex, newMessage: styledMsg }));
+      dispatch(updateMessage({ chatName: currentChat, index: editIndex, newMessage: styledMsg }));
       setEditIndex(null);
     } else {
-      dispatch(addMessage(styledMsg));
+      dispatch(addMessage({ chatName: currentChat, message: styledMsg }));
     }
+
     setMessage('');
     setItalic(false);
     setFontWeight('normal');
     setReplyTo(null);
     setShowEmojiPicker(false);
   };
+
+
+
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -89,37 +126,76 @@ export default function ChatComponent() {
   };
 
   const handleClearAll = () => {
-    if (window.confirm('האם למחוק את כל ההודעות?')) {
-      dispatch(clearMessages());
-      localStorage.removeItem('chatMessages');
+    if (window.confirm('האם למחוק את כל ההודעות בצ׳אט הנוכחי?')) {
+      dispatch(clearMessages(currentChat)); // נשלח את שם הצ'אט הנוכחי
     }
   };
 
-  const filteredMessages = messages.filter(msg =>
+
+  // const currentChat = useSelector((state) => state.Chatt.currentChat);
+  const filteredMessages = messages[currentChat]?.filter(msg =>
     msg.text.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ) || [];
+
 
   return (
     <Box sx={{ direction: 'rtl', p: 2, maxWidth: 700, margin: '0 auto' }}>
       <Typography level="h3" textAlign="center">צ'אט</Typography>
 
-      <Input
-        placeholder="🔍 חיפוש הודעות..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        sx={{ my: 2, borderRadius: '12px', backgroundColor: '#f5f5f5' }}
-      />
 
-      <Button
-        variant="outlined"
-        color="danger"
-        onClick={handleClearAll}
-        sx={{ my: 2 }}
-      >
-        ניקוי כל הצ'אט
-      </Button>
+<Box
+  sx={{
+    position: 'sticky',
+    top: 0,
+    backgroundColor: 'white',
+    zIndex: 1300,
+    padding: 1,
+    borderBottom: '1px solid #ddd',
+  }}
+>
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+    <Typography level="h3" textAlign="center">
+      {currentChat ? `צ'אט - ${currentChat}` : 'צאט'}
+    </Typography>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <IconButton onClick={(e) => setMenuAnchor(e.currentTarget)}>
+      <MoreVertIcon />
+    </IconButton>
+  </Box>
+
+<Menu
+  sx={{
+    position: 'relative',
+    zIndex: 9999
+  }}
+  anchorEl={menuAnchor}
+  open={Boolean(menuAnchor)}
+  onClose={() => setMenuAnchor(null)}
+>
+  {['REACT', 'C#', 'JAVA', 'ANGULAR'].map((chatName) => (
+    <MenuItem
+      key={chatName}
+      onClick={() => {
+        dispatch(setCurrentChat(chatName));
+        setMenuAnchor(null);
+      }}
+    >
+      {chatName}
+    </MenuItem>
+  ))}
+</Menu>
+
+  <Input
+    placeholder="🔍 חיפוש הודעות..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    sx={{ my: 1, borderRadius: '12px', backgroundColor: '#f5f5f5' }}
+  />
+</Box>
+
+<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
+
         {filteredMessages.map((msg, index) => {
           const isMyMessage = msg.sender === 'אתה';
           return (
@@ -191,11 +267,27 @@ export default function ChatComponent() {
                   </Box>
                 )}
 
-                {msg.replyTo !== undefined && msg.replyTo !== null && messages[msg.replyTo] && (
-                  <Box sx={{ fontSize: 'smaller', color: 'gray', mb: 1 }}>
-                    ↪️ {messages[msg.replyTo]?.text.slice(0, 30)}...
+
+                {msg.replyTo !== undefined && msg.replyTo !== null && messages[currentChat]?.[msg.replyTo] && (
+                  <Box sx={{
+                    backgroundColor: '#f0f0f0',
+                    borderRight: '4px solid #1976d2',
+                    borderRadius: '8px',
+                    padding: '8px',
+                    marginBottom: '8px',
+                    fontSize: '14px',
+                  }}>
+                    <Typography level="body3" fontWeight="bold" color="primary">
+                      {messages[currentChat][msg.replyTo].sender || 'משתמש'}
+                    </Typography>
+                    <Typography fontStyle="italic" color="neutral">
+                      {messages[currentChat][msg.replyTo].text.length > 100
+                        ? messages[currentChat][msg.replyTo].text.slice(0, 100) + '...'
+                        : messages[currentChat][msg.replyTo].text}
+                    </Typography>
                   </Box>
                 )}
+
 
                 <Typography
                   sx={{
@@ -218,12 +310,41 @@ export default function ChatComponent() {
       </Box>
 
       <FormControl sx={{ mt: 3 }}>
-        {replyTo !== null && (
-          <Box sx={{ mb: 1, color: 'primary.main' }}>
-            משיב ל: {messages[replyTo]?.text.slice(0, 30)}...
-            <Button variant="plain" size="sm" onClick={() => setReplyTo(null)}>ביטול</Button>
+        {replyTo !== null && messages[currentChat]?.[replyTo] && (
+          <Box
+            sx={{
+              backgroundColor: '#f0f0f0',
+              borderRight: '4px solid #1976d2',
+              borderRadius: '8px',
+              padding: '8px',
+              marginBottom: '8px',
+              fontSize: '14px',
+              maxWidth: '250px', // מגבלת רוחב
+            }}
+          >
+            <Typography level="body3" fontWeight="bold" color="primary">
+              {messages[currentChat][replyTo].sender || 'משתמש'}
+            </Typography>
+
+            <Typography
+              fontStyle="italic"
+              color="neutral"
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: 'block',
+              }}
+            >
+              {messages[currentChat][replyTo].text}
+            </Typography>
+
+            <Button variant="plain" size="sm" onClick={() => setReplyTo(null)}>
+              ביטול
+            </Button>
           </Box>
         )}
+
         <FormLabel>ההודעה שלך</FormLabel>
         <Textarea
           ref={textareaRef}
@@ -279,20 +400,32 @@ export default function ChatComponent() {
         />
       </FormControl>
 
+      <Button
+        variant="outlined"
+        color="danger"
+        onClick={handleClearAll}
+        sx={{ my: 2 }}
+      >
+        ניקוי כל הצ'אט
+      </Button>
+
+
       <Modal open={deleteIndex !== null} onClose={() => setDeleteIndex(null)}>
         <ModalDialog>
           <DialogTitle>האם למחוק הודעה זו?</DialogTitle>
           <DialogActions>
             <Button onClick={() => setDeleteIndex(null)}>ביטול</Button>
+
             <Button
               color="danger"
               onClick={() => {
-                dispatch(deleteMessage(deleteIndex));
+                dispatch(deleteMessage({ chatName: currentChat, index: deleteIndex }));
                 setDeleteIndex(null);
               }}
             >
               מחק
             </Button>
+
           </DialogActions>
         </ModalDialog>
       </Modal>
@@ -301,16 +434,27 @@ export default function ChatComponent() {
         <Box sx={{ position: 'fixed', bottom: 120, right: 20, zIndex: 1300 }}>
           <Picker
             data={data}
+
+
             onEmojiSelect={(e) => {
               if (emojiTargetIndex !== null) {
-                const updated = { ...messages[emojiTargetIndex] };
-                updated.text += ` ${e.native}`;
-                dispatch(updateMessage({ index: emojiTargetIndex, newMessage: updated }));
+                const updatedMessages = { ...messages };
+                const targetMessage = { ...updatedMessages[currentChat][emojiTargetIndex] };
+
+                if (targetMessage) {
+                  targetMessage.text = `${targetMessage.text} ${e.native}`;
+                  dispatch(updateMessage({ chatName: currentChat, index: emojiTargetIndex, newMessage: targetMessage }));
+                }
+                // אפס כאן את emojiTargetIndex אחרי העדכון
+                setEmojiTargetIndex(null);
               } else {
                 setMessage(prev => prev + ` ${e.native}`);
               }
               setShowEmojiPicker(false);
             }}
+
+
+
             locale="he"
             theme="light"
             searchPosition="top"
@@ -321,3 +465,6 @@ export default function ChatComponent() {
     </Box>
   );
 }
+
+
+
